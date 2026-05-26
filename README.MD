@@ -27,118 +27,120 @@ It supports multiple rate limiting algorithms and exposes a simple API for check
 ## API
 
 ### Health Check
-
 ```http
 GET /health
-Check Rate Limit
-http
+```
 
+### Check Rate Limit
+```http
 POST /check
-Token bucket example:
+```
 
-'''json 
+### Token bucket example:
+```json 
 {
   "key": "user_123",
   "algorithm": "token_bucket",
   "capacity": 3,
   "refill_rate": 1
 }
-Sliding window example:
+```
 
-'''json
+### Sliding window example:
+```json
 {
   "key": "user_123",
   "algorithm": "sliding_window",
   "max_requests": 100,
   "window_size": 60
 }
+```
 
-Fixed window example:
-
-'''json
+### Fixed window example:
+```json
 {
   "key": "user_123",
   "algorithm": "fixed_window",
   "max_requests": 100,
   "window_size": 60
 }
-
-Responses:
-
-'''text
-200 OK 
+```
+### Responses:
 when the request is allowed.
-
-'''text
-429 Too Many Requests
+```text
+200 OK 
+```
 when the request is rate limited.
+```text
+429 Too Many Requests
+```
 
-Run Locally
+## Run Locally
 Start Redis:
-
-'''powershell
+```powershell
 docker compose up redis
+```
 
 Start the API:
-
-'''powershell
+```powershell
 uvicorn api.main:app --reload
+```
 
 Open API docs:
-'''text
+```text
 http://localhost:8000/docs
+```
 
 Run With Docker Compose
-
-'''powershell
+```bash
 docker compose up --build
+```
 
-API will be available at:
+API will be available at: http://localhost:8000
 
-'''text
-http://localhost:8000
-
-Run Tests
+## Run Tests
 Make sure Redis is running, then:
 
-'''powershell
+```powershell
 pytest tests
+```
 
-Run Benchmarks
+## Run Benchmarks
 Start the API, then run Locust:
 
-'''powershell
+```powershell
 locust -f benchmarks/locustfile.py --host http://localhost:8000
+```
 
 Open Locust UI:
-
-'''text
+```text
 http://localhost:8089
+```
 
 Suggested test:
-
-'''text
+```text
 Users: 30
 Ramp up: 10
 Run time: 2m
-Project Structure
+```
 
-'''text
+## Project Structure
+```text
 api/                  FastAPI app and routes
 ratelimiter/          Rate limiting algorithms, backends, middleware
 benchmarks/           Locust benchmark file
 tests/                Pytest test suite
 docker-compose.yml    API + Redis services
 Dockerfile            API container image
-Algorithms
-
-Token Bucket
+```
+##Algorithms
+###Token Bucket
 Allows bursts up to a configured capacity and refills tokens over time.
 
-Sliding Window
+###Sliding Window
 Tracks request timestamps and allows only a maximum number of requests within a rolling time window.
 
-Fixed Window
+###Fixed Window
 Counts requests in fixed time windows and resets when the window changes.
 
 ## Benchmark Results
@@ -153,6 +155,5 @@ Tested with Locust — 50 users, 60 seconds
 | p99 latency | 25ms |
 | Rate limited (429s) | ~49% |
 
-
 ## Current Limitations
-- `remaining` field in response is hardcoded to 0 — full token counting not yet implemented
+- `remaining` field in response is hardcoded to 0 — full token counting not yet implemente
