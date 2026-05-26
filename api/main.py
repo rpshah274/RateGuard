@@ -12,7 +12,7 @@ async def lifespan(app: FastAPI):
     # backend = RedisBackend(url="redis://localhost:6379")
     backend = RedisBackend(url=os.getenv("REDIS_URL", "redis://localhost:6379"))
     app.state.backend = backend
-    app.state.token_bucket_limiter = TokenBucketRateLimiter(backend=backend, capacity=3, refill_rate=1)
+    app.state.token_bucket_limiter = TokenBucketRateLimiter(backend=backend, capacity=100, refill_rate=10)
     app.state.sliding_window_limiter = SlidingWindowRateLimiter(backend=backend, max_requests=100, window_size=60)
     app.state.fixed_window_limiter = FixedWindowRateLimiter(backend=backend, max_requests=100, window_size=60)
     yield
