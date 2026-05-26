@@ -36,8 +36,7 @@ http
 POST /check
 Token bucket example:
 
-json
-
+'''json 
 {
   "key": "user_123",
   "algorithm": "token_bucket",
@@ -46,95 +45,85 @@ json
 }
 Sliding window example:
 
-json
-
+'''json
 {
   "key": "user_123",
   "algorithm": "sliding_window",
   "max_requests": 100,
   "window_size": 60
 }
+
 Fixed window example:
 
-json
-
+'''json
 {
   "key": "user_123",
   "algorithm": "fixed_window",
   "max_requests": 100,
   "window_size": 60
 }
+
 Responses:
 
-text
-
-
-200 OK
+'''text
+200 OK 
 when the request is allowed.
 
-text
-
-
+'''text
 429 Too Many Requests
 when the request is rate limited.
 
 Run Locally
 Start Redis:
 
-powershell
-
+'''powershell
 docker compose up redis
+
 Start the API:
 
-powershell
-
+'''powershell
 uvicorn api.main:app --reload
+
 Open API docs:
-
-text
-
-
+'''text
 http://localhost:8000/docs
-Run With Docker Compose
-powershell
 
+Run With Docker Compose
+
+'''powershell
 docker compose up --build
+
 API will be available at:
 
-text
-
-
+'''text
 http://localhost:8000
+
 Run Tests
 Make sure Redis is running, then:
 
-powershell
-
+'''powershell
 pytest tests
+
 Run Benchmarks
 Start the API, then run Locust:
 
-powershell
-
+'''powershell
 locust -f benchmarks/locustfile.py --host http://localhost:8000
+
 Open Locust UI:
 
-text
-
-
+'''text
 http://localhost:8089
+
 Suggested test:
 
-text
-
-
+'''text
 Users: 30
 Ramp up: 10
 Run time: 2m
 Project Structure
-text
 
-
+'''text
 api/                  FastAPI app and routes
 ratelimiter/          Rate limiting algorithms, backends, middleware
 benchmarks/           Locust benchmark file
@@ -142,6 +131,7 @@ tests/                Pytest test suite
 docker-compose.yml    API + Redis services
 Dockerfile            API container image
 Algorithms
+
 Token Bucket
 Allows bursts up to a configured capacity and refills tokens over time.
 
