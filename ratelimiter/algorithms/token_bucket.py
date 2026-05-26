@@ -49,8 +49,8 @@ class TokenBucketRateLimiter(BaseRateLimiter):
         # Here we can get race conditions to solve using redis we use Lua script to make it atomic
         now = int(time.time())
         ttl = int(self.capacity / self.refill_rate)*2 
-        result = self.script(keys=[key],args=[self.capacity, self.refill_rate , now , ttl])
-        
+        # result = self.script(keys=[key],args=[self.capacity, self.refill_rate , now , ttl])
+        result = self.script(keys=[f"tb:{key}"], args=[self.capacity, self.refill_rate, now, ttl])
         # allowed = bool(result[0])
         # remaining = int(float(result[1]))
 

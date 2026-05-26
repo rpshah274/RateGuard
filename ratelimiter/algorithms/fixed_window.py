@@ -12,7 +12,7 @@ class FixedWindowRateLimiter(BaseRateLimiter):
         now = int(time.time())
         window_start = int(now // self.window_size)*self.window_size
         # unique key per user per window
-        window_key = f"{user_id}:{window_start}"
+        window_key = f"fw:{user_id}:{window_start}"
         # increment and set TTL in same operation
         count = self.backend.increment(window_key, self.window_size)
         return count <= self.max_requests
