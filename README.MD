@@ -102,8 +102,24 @@ API will be available at: http://localhost:8000
 Make sure Redis is running, then:
 
 ```powershell
-pytest tests
+pytest tests/
 ```
+
+For code coverage:
+```bash
+pytest tests/ --cov=ratelimiter --cov-report=term-missing
+```
+## Test Coverage
+
+| Module | Statements | Coverage |
+|---|---|---|
+| algorithms/fixed_window.py | 14 | 100% |
+| algorithms/sliding_window.py | 20 | 100% |
+| algorithms/token_bucket.py | 15 | 100% |
+| backends/memory.py | 36 | 64% |
+| backends/redis.py | 22 | 50% |
+| middleware/fastapi.py | 26 | 0% |
+| **Total** | **166** | **67%** |
 
 ## Run Benchmarks
 Start the API, then run Locust:
@@ -133,14 +149,14 @@ tests/                Pytest test suite
 docker-compose.yml    API + Redis services
 Dockerfile            API container image
 ```
-##Algorithms
-###Token Bucket
+## Algorithms
+### Token Bucket
 Allows bursts up to a configured capacity and refills tokens over time.
 
-###Sliding Window
+### Sliding Window
 Tracks request timestamps and allows only a maximum number of requests within a rolling time window.
 
-###Fixed Window
+### Fixed Window
 Counts requests in fixed time windows and resets when the window changes.
 
 ## Benchmark Results
