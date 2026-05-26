@@ -151,7 +151,18 @@ Tracks request timestamps and allows only a maximum number of requests within a 
 Fixed Window
 Counts requests in fixed time windows and resets when the window changes.
 
-Current Limitations
-Response metadata such as remaining is currently basic.
-Redis key prefixes should be added internally for stronger algorithm isolation.
-CI workflow can be added with GitHub Action    
+## Benchmark Results
+
+Tested with Locust — 50 users, 60 seconds
+
+| Metric | Value |
+|---|---|
+| Requests/sec | 150 |
+| Median latency | 7ms |
+| p95 latency | 16ms |
+| p99 latency | 25ms |
+| Rate limited (429s) | ~49% |
+
+
+## Current Limitations
+- `remaining` field in response is hardcoded to 0 — full token counting not yet implemented
