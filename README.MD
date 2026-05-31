@@ -1,5 +1,7 @@
 # RateGuard
+
 ![CI](https://github.com/rpshah274/RateGuard/actions/workflows/ci.yml/badge.svg)
+
 RateGuard is a distributed rate limiting service built with FastAPI and Redis.
 
 It supports multiple rate limiting algorithms and exposes a simple API for checking whether a request should be allowed or blocked.
