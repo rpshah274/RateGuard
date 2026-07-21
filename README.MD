@@ -1,4 +1,4 @@
-# RateGuard
+# RateGuard – Distributed Rate Limiting Service
 
 ![CI](https://github.com/rpshah274/RateGuard/actions/workflows/ci.yml/badge.svg)
 
